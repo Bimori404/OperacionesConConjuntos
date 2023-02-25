@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operaciones de Conjuntos</title>
+
+  <style>
+    body {
+      font-family: "Open Sans", sans-serif;
+    }
+
+    fieldset .concepto {
+      width: 35em;
+      /* 37em */
+      display: inline;
+      place-items: center;
+    }
+
+    @media screen and (max-width: 1236px) {
+      fieldset .concepto {
+        width: 15.8em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <fieldset>
+    <legend>
+      <h1>Operaciones de Conjuntos</h1>
+    </legend>
+    <form>
+      <label for="lenguaje">Alfabeto:</label>
+      <input type="text" id="lenguaje" required /><br /><br />
+
+      <label for="conjuntoA">Lenguaje A:</label>
+      <input type="text" id="conjuntoA" required /><br /><br />
+
+      <label for="conjuntoB">Lenguaje B:</label>
+      <input type="text" id="conjuntoB" required /><br /><br />
+
+      <button type="button" onclick="realizarOperaciones()">
+        Realizar operaciones
+      </button>
+    </form>
+
+    <h2>Resultados:</h2>
+    <p><strong>Unión: </strong><span id="union"></span></p>
+    <p><strong>Intersección: </strong><span id="interseccion"></span></p>
+    <p>
+      <strong>Diferencia simétrica: </strong><span id="difSimetrica"></span>
+    </p>
+    <p><strong>Multiplicacion: </strong><span id="producto"></span></p>
+    <!--------------------------------------------------------->
+    <p><strong>Diferencia: </strong></p>
+    <p><strong>A-B: </strong><span id="diferenciaA_B"></span></p>
+    <p><strong>B-A: </strong><span id="diferenciaB_A"></span></p>
+    <!--------------------------------------------------------->
+    <p><strong>Complemento: </strong></p>
+    <p><strong>De A: </strong><span id="complementoA"></span></p>
+    <p><strong>De B: </strong><span id="complementoB"></span></p>
+    <!--------------------------------------------------------->
+    <p><strong>Cerradura de Kleene: </strong></p>
+    <p><strong>Conjunto A: </strong><span id="cerraduraKleeneA"></span></p>
+    <p><strong>Conjunto B: </strong><span id="cerraduraKleeneB"></span></p>
+    <!--------------------------------------------------------->
+    <p><strong>Cerradura positiva: </strong></p>
+    <p><strong>Conjunto A: </strong><span id="cerraduraPositivaA"></span></p>
+    <p><strong>Conjunto B: </strong><span id="cerraduraPositivaB"></span></p>
+
+  </fieldset>
+
+  <fieldset>
+    <legend><strong>Conceptos</strong></legend>
+    <fieldset class="concepto">
+      <legend><strong>Unión</strong></legend>
+      <p>
+        Operación que nos permite unir dos o más conjuntos para formar otro
+        conjunto
+      </p>
+    </fieldset>
+    <fieldset class="concepto">
+      <legend><strong>Intersección</strong></legend>
+      <p>
+        Operación que nos permite formar un conjunto con los elementos
+        compartidos
+      </p>
+    </fieldset>
+    <fieldset class="concepto">
+      <legend><strong>Multiplicacion</strong></legend>
+      <p>Operación que nos permite formar pares ordenados<br><br></p>
+    </fieldset>
+    <fieldset class="concepto">
+      <legend><strong>Diferencia simétrica</strong></legend>
+      <p>
+        Operación que nos permite formar un conjunto con los elementos que no
+        son compartidos
+      </p>
+    </fieldset>
+    <fieldset class="concepto">
+      <legend><strong>Diferencia</strong></legend>
+      <p>
+        Operación que nos permite tener todos los elementos que pertenecen al
+        primer conjunto pero no al segundo
+      </p>
+    </fieldset>
+    <fieldset class="concepto">
+      <legend><strong>Complemento</strong></legend>
+      <p>
+        Operación que nos permite tener todos los elementos que pertenecen al
+        lenguaje pero no al conjunto
+      </p>
+    </fieldset>
+    <fieldset class="concepto">
+      <legend><strong>Cerradura de Kleene</strong></legend>
+      <p>
+        Operación que forma cadenas al realizar cero o más concatenaciones de las
+        cadenas del lenguaje
+      </p>
+    </fieldset>
+    <fieldset class="concepto">
+      <legend><strong>Cerradura Positiva</strong></legend>
+      <p>
+        Operación que forma cadenas al realizar una o más concatenaciones de las
+        cadenas del lenguaje
+      </p>
+    </fieldset>
+  </fieldset>
+</body>
+
+<script>
+/***************************************************************************************************/
+  function realizarOperaciones() {
+    // Obtenemos los valores de los conjuntos
+    var lenguaje = document.getElementById("lenguaje").value.trim();
+    var conjuntoA = document.getElementById("conjuntoA").value.trim();
+    var conjuntoB = document.getElementById("conjuntoB").value.trim();
+
+    //Verificamos que los campos de entrada no estén vacíos (|| conjuntoB === "")
+    if (lenguaje === "" || conjuntoA === "") {
+      alert("Por favor, complete todos los campos.");
+      return;
+    }
+
+    // Convertimos los valores de los conjuntos en arrays
+    lenguaje = lenguaje.split(",");
+    conjuntoA = conjuntoA.split(",");
+    conjuntoB = conjuntoB.split(",");
+
+    // Eliminamos espacios en blanco alrededor de cada elemento
+    lenguaje = lenguaje.map(function (x) { return x.trim(); });
+    conjuntoA = conjuntoA.map(function (x) { return x.trim(); });
+    conjuntoB = conjuntoB.map(function (x) { return x.trim(); });
+
+    // Verificamos que los elementos dentro de los conjuntos sean únicos
+    var uniqueLenguaje = new Set(lenguaje);
+    var uniqueConjuntoA = new Set(conjuntoA);
+    var uniqueConjuntoB = new Set(conjuntoB);
+
+    if (uniqueLenguaje.size !== lenguaje.length) {
+      alert("Los elementos dentro del lenguaje deben ser únicos.");
+      return;
+    }
+
+    if (uniqueConjuntoA.size !== conjuntoA.length) {
+      alert("Los elementos dentro del Conjunto A deben ser únicos.");
+      return;
+    }
+
+    if (uniqueConjuntoB.size !== conjuntoB.length) {
+      alert("Los elementos dentro del Conjunto B deben ser únicos.");
+      return;
+    }
+
+    // Verificamos que los elementos en los conjuntos pertenezcan al lenguaje
+    var invalidElementsA = conjuntoA.filter((x) => !uniqueLenguaje.has(x));
+    var invalidElementsB = conjuntoB.filter((x) => !uniqueLenguaje.has(x));
+
+    /*if (invalidElementsA.length > 0) {
+      alert(`Los elementos ${invalidElementsA.join(", ")} en Conjunto A no pertenecen al lenguaje.`);
+      return;
+    }
+    if (invalidElementsB.length > 0) {
+      alert(`Los elementos ${invalidElementsB.join(", ")} en Conjunto B no pertenecen al lenguaje.`);
+      return;
+    }*/
+
+    // Creamos los conjuntos
+    var setA = new Set(conjuntoA);
+    var setB = new Set(conjuntoB);
+
+    // Realizamos las operaciones
+    var union = new Set([...setA, ...setB]);
+    var interseccion = new Set([...setA].filter((x) => setB.has(x)));
+    var difSimetrica = new Set([...setA].filter((x) => !setB.has(x)).concat([...setB].filter((x) => !setA.has(x))));
+    var producto = new Set([...setA].flatMap((x) => [...setB].map((y) => `${x}${y}`)));
+    //---------------------------
+    var diferenciaA_B = new Set([...setA].filter((x) => !setB.has(x)));
+    var diferenciaB_A = new Set([...setB].filter((x) => !setA.has(x)));
+    //---------------------------
+    var complementoA = new Set([...uniqueLenguaje].filter((x) => !setA.has(x)));
+    var complementoB = new Set([...uniqueLenguaje].filter((x) => !setB.has(x)));
+
+    // Mostramos los resultados en la página
+    document.getElementById("union").innerHTML = Array.from(union).join(", ");
+    document.getElementById("interseccion").innerHTML = Array.from(interseccion).join(", ");
+    document.getElementById("difSimetrica").innerHTML = Array.from(difSimetrica).join(", ");
+
+    document.getElementById("diferenciaA_B").innerHTML = Array.from(diferenciaA_B).join(", ");
+    document.getElementById("diferenciaB_A").innerHTML = Array.from(diferenciaB_A).join(", ");
+    document.getElementById("complementoA").innerHTML = Array.from(complementoA).join(", ");
+    document.getElementById("complementoB").innerHTML = Array.from(complementoB).join(", ");
+    document.getElementById("producto").innerHTML = Array.from(producto).join(", ");
+
+    /**********************************************************************************************/
+    // Cerradura de Kleene A
+    var cerraduraKleeneA = new Set();
+    cerraduraKleeneA.add("Ɛ"); // Se agrega la cadena vacía (Ɛ)
+    for (var i = 1; i <= 9; i++) { // solo se permiten dígitos del 1 al 9 como primer dígito
+      var nuevosElementos = new Set([...cerraduraKleeneA].flatMap(x => [...setA].map(y => i.toString() + y)));
+      cerraduraKleeneA = new Set([...cerraduraKleeneA, ...nuevosElementos]);
+    }
+    // Cerradura de Kleene B
+    var cerraduraKleeneB = new Set();
+    cerraduraKleeneB.add("Ɛ");
+    for (var i = 1; i <= 9; i++) {
+      var nuevosElementos = new Set([...cerraduraKleeneB].flatMap(x => [...setA].map(y => i.toString() + y)));
+      cerraduraKleeneB = new Set([...cerraduraKleeneB, ...nuevosElementos]);
+    }
+
+    document.getElementById("cerraduraKleeneA").innerHTML = Array.from(cerraduraKleeneA).join(", ");
+    document.getElementById("cerraduraKleeneB").innerHTML = Array.from(cerraduraKleeneB).join(", ");
+
+    /**********************************************************************************************/
+    // Cerradura positiva A
+    var cerraduraPositivaA = new Set(conjuntoA);
+    for (var i = 1; i <= 2; i++) {
+      var nuevosElementos = new Set([...cerraduraPositivaA].flatMap(x => [...setA].map(y => x + y)));
+      cerraduraPositivaA = new Set([...cerraduraPositivaA, ...nuevosElementos]);
+    }
+    // Cerradura positiva B
+    var cerraduraPositivaB = new Set(conjuntoB);
+    for (var i = 1; i <= 2; i++) {
+      var nuevosElementos = new Set([...cerraduraPositivaB].flatMap(x => [...setB].map(y => x + y)));
+      cerraduraPositivaB = new Set([...cerraduraPositivaB, ...nuevosElementos]);
+    }
+
+    document.getElementById("cerraduraPositivaA").innerHTML = Array.from(cerraduraPositivaA).join(", ");
+    document.getElementById("cerraduraPositivaB").innerHTML = Array.from(cerraduraPositivaB).join(", ");
+  }
+/***************************************************************************************************/
+
+</script>
+
+</html>
+
+<!-- Cerradura de kleene y positiva antes de la modificacion -->
+<!--
+// Cerradura de Kleene
+var cerraduraKleene = new Set();
+cerraduraKleene.add("Ɛ"); // El conjunto vacío siempre forma parte de la cerradura de Kleene
+for (var i = 1; i <= conjuntoA.length; i++) {
+    var nuevosElementos = new Set([...cerraduraKleene].flatMap(x => [...setA].map(y => x + y)));
+    cerraduraKleene = new Set([...cerraduraKleene, ...nuevosElementos]);
+}
+document.getElementById("cerraduraKleene").innerHTML = Array.from(cerraduraKleene).join(", ");
+
+// Cerradura positiva
+var cerraduraPositiva = new Set(conjuntoA);
+for (var i = 1; i <= conjuntoA.length; i++) {
+    var nuevosElementos = new Set([...cerraduraPositiva].flatMap(x => [...setA].map(y => x + y)));
+    cerraduraPositiva = new Set([...cerraduraPositiva, ...nuevosElementos]);
+}
+document.getElementById("cerraduraPositiva").innerHTML = Array.from(cerraduraPositiva).join(", ");
+
+-->
