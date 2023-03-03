@@ -8,20 +8,107 @@
   <title>Operaciones de Conjuntos</title>
 
   <style>
+    /* Estilos generales */
     body {
       font-family: "Open Sans", sans-serif;
+      background-color: #f0f0f0;
     }
 
-    fieldset .concepto {
-      width: 35em;
-      /* 37em */
-      display: inline;
-      place-items: center;
+    fieldset {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+
+    legend {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    h1,
+    h2 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      padding: 5px;
+      width: 90em;
+    }
+
+    button[type="button"] {
+      background-color: #008CBA;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    button[type="button"]:hover {
+      background-color: #005b79;
+    }
+
+    /* Estilos para resultados */
+    p {
+      margin-bottom: 10px;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    #union,
+    #interseccion,
+    #difSimetrica,
+    #producto,
+    #diferenciaA_B,
+    #diferenciaB_A,
+    #complementoA,
+    #complementoB,
+    #cerraduraKleeneA,
+    #cerraduraKleeneB,
+    #cerraduraPositivaA,
+    #cerraduraPositivaB {
+      font-size: 18px;
+    }
+
+    /* Estilos para conceptos */
+    .concepto {
+      background-color: #fff;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      padding: 10px;
+      text-align: justify;
+    }
+
+    .concepto legend {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     @media screen and (max-width: 1236px) {
-      fieldset .concepto {
-        width: 15.8em;
+      .concepto {
+        width: 25em;
+      }
+
+      input[type="text"] {
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        width: 25em;
       }
     }
   </style>
